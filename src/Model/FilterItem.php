@@ -483,7 +483,7 @@ class FilterItem extends DataObject
         } else {
             if ((bool) $this->UseAdvancedFieldSelection === false) {
                 $fields = $this->getSearchFields();
-                if (!$fields) {
+                if (!$fields instanceof FieldList) {
                     $f = null;
                 } else {
                     $f = $fields->fieldByName($this->FieldName);
@@ -513,7 +513,7 @@ class FilterItem extends DataObject
                             $v = [null];
                         } else {
                             $v = strtolower($v);
-                            $v = $v === '1' || $v === 'true' || $v === 'yes' || $v === 'on' || $v === 1;
+                            $v = in_array($v, ['1', 'true', 'yes', 'on', 1], true);
 
                             $f = OptionsetField::create(
                                 'FilterValue',
